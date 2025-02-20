@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 18, 2025 at 04:53 AM
+-- Generation Time: Feb 20, 2025 at 07:36 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `unitybackendtutorial`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `items`
+--
+
+CREATE TABLE `items` (
+  `ID` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` text NOT NULL,
+  `price` int(100) NOT NULL,
+  `image` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `items`
+--
+
+INSERT INTO `items` (`ID`, `name`, `description`, `price`, `image`) VALUES
+(1, 'Sword', 'a simple sword for killing monsters', 200, ''),
+(2, 'Potion', 'Heals your hero for a small amount of HP', 25, '');
 
 -- --------------------------------------------------------
 
@@ -45,9 +67,35 @@ INSERT INTO `user` (`id`, `username`, `password`, `level`, `coins`) VALUES
 (3, 'testuser3', '123456', 1, 0),
 (4, 'testuser8', '123456', 1, 0);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `usersitems`
+--
+
+CREATE TABLE `usersitems` (
+  `ID` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `itemID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `usersitems`
+--
+
+INSERT INTO `usersitems` (`ID`, `userID`, `itemID`) VALUES
+(1, 1, 1),
+(2, 2, 1);
+
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `items`
+--
+ALTER TABLE `items`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `user`
@@ -56,14 +104,32 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `usersitems`
+--
+ALTER TABLE `usersitems`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `items`
+--
+ALTER TABLE `items`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `usersitems`
+--
+ALTER TABLE `usersitems`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
