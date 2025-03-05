@@ -71,6 +71,16 @@ public class Web : MonoBehaviour
             else
             {
                 Debug.Log(www.downloadHandler.text);
+                Main.Instance.userInfo.SetCredentials(username, password);
+                Main.Instance.userInfo.SetID(www.downloadHandler.text);
+
+                if (www.downloadHandler.text.Contains("Wrong Credentials") || www.downloadHandler.text.Contains("Username does not exist"))
+                    Debug.Log("Try Again");
+                else
+                {
+                    Main.Instance.userProfile.SetActive(true);
+                    Main.Instance.login.gameObject.SetActive(false);
+                }
             }
         }
     }
@@ -92,6 +102,54 @@ public class Web : MonoBehaviour
             else
             {
                 Debug.Log(www.downloadHandler.text);
+            }
+        }
+    }
+
+    public IEnumerator GetItemsIDs(string userID, System.Action<string> callback)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("userID", userID);
+
+        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/UnityBackendTutorial/GetItemsIDs.php", form))
+        {
+            yield return www.Send();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                // Show results as text
+                Debug.Log(www.downloadHandler.text);
+                string jsonArray = www.downloadHandler.text;
+
+                callback(jsonArray);
+            }
+        }
+    }
+
+    public IEnumerator GetItems(string itemID, System.Action<string> callback)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("itemID", itemID);
+
+        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/UnityBackendTutorial/GetItem.php", form))
+        {
+            yield return www.Send();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                // Show results as text
+                Debug.Log(www.downloadHandler.text);
+                string jsonArray = www.downloadHandler.text;
+
+                callback(jsonArray);
             }
         }
     }
