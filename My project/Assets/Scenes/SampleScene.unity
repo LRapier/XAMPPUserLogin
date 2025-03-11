@@ -972,7 +972,7 @@ MonoBehaviour:
   m_text: LOGIN
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0cab5c54e64939d4eb0a6d245348a713, type: 2}
-  m_sharedMaterial: {fileID: 2659907921362153113, guid: 0cab5c54e64939d4eb0a6d245348a713, type: 2}
+  m_sharedMaterial: {fileID: 6278833499116216953, guid: 0cab5c54e64939d4eb0a6d245348a713, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

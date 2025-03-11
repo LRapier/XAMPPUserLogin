@@ -8,16 +8,14 @@ public class Web : MonoBehaviour
     void Start()
     {
         StartCoroutine(GetDate());
-        //StartCoroutine(Login("testuser", "123456"));
-        //StartCoroutine(RegisterUser("testuser3", "123456"));
     }
 
     public IEnumerator GetDate()
     {
-        using (UnityWebRequest www = UnityWebRequest.Get("http://localhost/UnityBackendTutorial/GetDate.php"))
+        using (UnityWebRequest www = UnityWebRequest.Get("http://lr-xampp.hstn.me/UnityBackendTutorial/GetDate.php"))
         {
-            yield return www.Send();
-
+            yield return www.SendWebRequest();
+#pragma warning disable CS0618 // Type or member is obsolete
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
@@ -35,10 +33,9 @@ public class Web : MonoBehaviour
 
     public IEnumerator GetUsers()
     {
-        using (UnityWebRequest www = UnityWebRequest.Get("http://localhost/UnityBackendTutorial/GetUsers.php"))
+        using (UnityWebRequest www = UnityWebRequest.Get("http://lr-xampp.hstn.me/UnityBackendTutorial/GetUsers.php"))
         {
-            yield return www.Send();
-
+            yield return www.SendWebRequest();
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
@@ -60,10 +57,9 @@ public class Web : MonoBehaviour
         form.AddField("loginUser", username);
         form.AddField("loginPass", password);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/unitybackendtutorial/Login.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("http://lr-xampp.hstn.me/unitybackendtutorial/Login.php", form))
         {
             yield return www.SendWebRequest();
-
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
@@ -91,7 +87,7 @@ public class Web : MonoBehaviour
         form.AddField("loginUser", username);
         form.AddField("loginPass", password);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/unitybackendtutorial/RegisterUser.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("http://lr-xampp.hstn.me/unitybackendtutorial/RegisterUser.php", form))
         {
             yield return www.SendWebRequest();
 
@@ -111,9 +107,9 @@ public class Web : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("userID", userID);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/UnityBackendTutorial/GetItemsIDs.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("http://lr-xampp.hstn.me/UnityBackendTutorial/GetItemsIDs.php", form))
         {
-            yield return www.Send();
+            yield return www.SendWebRequest();
 
             if (www.isNetworkError || www.isHttpError)
             {
@@ -135,9 +131,9 @@ public class Web : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("itemID", itemID);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/UnityBackendTutorial/GetItem.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("http://lr-xampp.hstn.me/UnityBackendTutorial/GetItem.php", form))
         {
-            yield return www.Send();
+            yield return www.SendWebRequest();
 
             if (www.isNetworkError || www.isHttpError)
             {
@@ -150,6 +146,29 @@ public class Web : MonoBehaviour
                 string jsonArray = www.downloadHandler.text;
 
                 callback(jsonArray);
+            }
+        }
+    }
+
+    public IEnumerator SellItem(string ID, string userID, string itemID)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("ID", ID);
+        form.AddField("itemID", itemID);
+        form.AddField("userID", userID);
+
+        using (UnityWebRequest www = UnityWebRequest.Post("http://lr-xampp.hstn.me/UnityBackendTutorial/SellItem.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                // Show results as text
+                Debug.Log(www.downloadHandler.text);
             }
         }
     }
