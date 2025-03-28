@@ -1,16 +1,10 @@
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "unitybackendtutorial";
+require 'ConnectionSettings.php';
 
 //user variables
 $loginUser = $_POST["loginUser"];
 $loginPass = $_POST["loginPass"];
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) 
@@ -18,7 +12,7 @@ if ($conn->connect_error)
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT password FROM user WHERE username = '" . $loginUser . "'";
+$sql = "SELECT password, id FROM user WHERE username = '" . $loginUser . "'";
 
 $result = $conn->query($sql);
 
@@ -27,7 +21,7 @@ if ($result->num_rows > 0)
     // Output data of each row
     while ($row = $result->fetch_assoc()) {
         if ($row["password"] == $loginPass) {
-            echo "Login Success.";
+            echo $row["id"];
         } else {
             echo "Wrong Credentials.";
         }
